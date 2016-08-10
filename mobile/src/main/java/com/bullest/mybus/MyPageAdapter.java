@@ -12,8 +12,6 @@ import java.util.List;
  * Created by yunfezhang on 8/10/16.
  */
 public class MyPageAdapter extends FragmentPagerAdapter{
-    public static int BUS_TOTAL_NUMBER = 4;
-
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
 
@@ -36,7 +34,7 @@ public class MyPageAdapter extends FragmentPagerAdapter{
         return mFragmentTitleList.get(position);
     }
 
-    public void addFragment(Fragment fragment, String title, String bus) {
+    public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
     }

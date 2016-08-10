@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,13 +25,14 @@ import android.widget.TextView;
 public class MainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String BUS_NO = "bus number";
+    private static final String DIRECTION = "param2";
     public static final String ARG_OBJECT = "object";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView textView;
+
+    private String busNumber;
+    private String direction;
 
     private OnFragmentInteractionListener mListener;
 
@@ -39,16 +44,16 @@ public class MainFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param busNumer Which bus
+     * @param direction To Where
      * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainFragment newInstance(String param1, String param2) {
+    public static MainFragment newInstance(String busNumer, String direction) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(BUS_NO, busNumer);
+        args.putString(DIRECTION, direction);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,8 +62,8 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            busNumber = getArguments().getString(BUS_NO);
+            direction = getArguments().getString(DIRECTION);
         }
     }
 
@@ -69,6 +74,8 @@ public class MainFragment extends Fragment {
         // properly.
         View rootView = inflater.inflate(
                 R.layout.fragment_main, container, false);
+        textView = (TextView) rootView.findViewById(R.id.test);
+        textView.setText(busNumber + direction);
         return rootView;
     }
 
@@ -109,5 +116,14 @@ public class MainFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://180.166.5.82:8000")
+                .addConverterFactory(SimpleXmlConverterFactory().create())
+                .build();
     }
 }

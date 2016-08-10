@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     private void setupViewPager(ViewPager viewPager) {
         MyPageAdapter adapter = new MyPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MainFragment(), "张江1路", Constants.BUS.ZJ1);
-        adapter.addFragment(new MainFragment(), "浦东2路", Constants.BUS.PD2);
+        adapter.addFragment(MainFragment.newInstance(Constants.BUS.ZJ1, Constants.DIRECTION.ZJ1_TO_HOME), "张江1路");
+        adapter.addFragment(MainFragment.newInstance("pudong2", "324"), "浦东2路");
         viewPager.setAdapter(adapter);
     }
 
