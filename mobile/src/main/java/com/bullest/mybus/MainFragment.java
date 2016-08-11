@@ -4,11 +4,16 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -34,13 +39,17 @@ public class MainFragment extends Fragment {
     private static final String BUS_NO = "bus number";
     private static final String DIRECTION = "param2";
     public static final String ARG_OBJECT = "object";
-
+    public List<Car> cars = new ArrayList<>();
     private TextView textView;
 
     private String busNumber;
     private String direction;
 
     private OnFragmentInteractionListener mListener;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public MainFragment() {
         // Required empty public constructor
@@ -76,12 +85,18 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        monitorBus();
+
         // The last two arguments ensure LayoutParams are inflated
         // properly.
         View rootView = inflater.inflate(
                 R.layout.fragment_main, container, false);
-        textView = (TextView) rootView.findViewById(R.id.test);
-        textView.setText(busNumber + direction);
+
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mAdapter = new MyRecyclerAdapter(cars);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
         return rootView;
     }
 
@@ -97,7 +112,6 @@ public class MainFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
-            monitorBus();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -128,16 +142,18 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        monitorBus();
     }
 
     public void monitorBus() {
-        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", "2016-08-1114:32");
+        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", new SimpleDateFormat("yyyy-MM-dd HH:MM").format(Calendar.getInstance().getTime()));
         buses.enqueue(new Callback<RealtimeBus>() {
             @Override
             public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
                 if (response.isSuccessful()){
-                    List<Car> cars = response.body().cars.mCarList;
-                    textView.setText(cars.get(0).getTime());
+                    cars.clear();
+                    cars.addAll(response.body().cars.mCarList);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
 
