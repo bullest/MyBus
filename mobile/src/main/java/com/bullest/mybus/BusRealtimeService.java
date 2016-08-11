@@ -11,7 +11,7 @@ import retrofit2.http.Query;
  */
 public interface BusRealtimeService {
     @GET("palmbus_serv/PalmBusJgj/carMonitor.do")
-    Call<List<RealtimeBus>> groupList
+    Call<RealtimeBus> realBus
             (@Query("lineid") String lineid,
              @Query("stopid") String stopid,
              @Query("direction") String direction,

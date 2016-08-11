@@ -9,7 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
@@ -91,6 +97,7 @@ public class MainFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
+            monitorBus();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -121,9 +128,23 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://180.166.5.82:8000")
-                .addConverterFactory(SimpleXmlConverterFactory().create())
-                .build();
+    }
+
+    public void monitorBus() {
+        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", "2016-08-1114:32");
+        buses.enqueue(new Callback<RealtimeBus>() {
+            @Override
+            public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
+                if (response.isSuccessful()){
+                    List<Car> cars = response.body().cars.mCarList;
+                    textView.setText(cars.get(0).getTime());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RealtimeBus> call, Throwable t) {
+                    textView.setText(t.getMessage());
+            }
+        });
     }
 }
