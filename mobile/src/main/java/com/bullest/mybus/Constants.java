@@ -1,5 +1,10 @@
 package com.bullest.mybus;
 
+import android.location.Location;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by yunfezhang on 8/10/16.
  */
@@ -29,6 +34,24 @@ public class Constants {
         public static final String K989_TO_WORK = "1";
         public static final String PD11_TO_WORK = "0";
         public static final String PD11_TO_HOME = "1";
+    }
+
+    public static class LOCATION {
+        public static HashMap<String, Location> map;
+        public static final int SHIP_NEAR = 2000;
+        public static Location HOME = new Location("Tink");
+        public static Location GC  = new Location("Tink");
+
+
+
+        LOCATION(){
+            Location Ship = new Location("Tink");
+            Ship.setLatitude(31.31963917);
+            Ship.setLongitude(121.55542447);
+            map.put("ship", Ship);
+
+
+        }
     }
 
 }
