@@ -5,11 +5,11 @@ package com.bullest.mybus;
  */
 
 public enum MyLocation {
-    HOME,
-    ZHANGJIANG,
-    GC,
-    SHIP,
-    TANGZHEN,
-    CHANGTAI,
+    家,
+    张江地铁,
+    德国中心,
+    码头,
+    唐镇地铁,
+    长泰,
     SALIYA
 }

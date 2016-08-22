@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,14 +37,11 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 public class MainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String BUS_NO = "bus number";
-    private static final String DIRECTION = "param2";
-    public static final String ARG_OBJECT = "object";
+    public static final String POSITION = "position";
     public List<Car> cars = new ArrayList<>();
     private TextView textView;
 
-    private String busNumber;
-    private String direction;
+    private MyLocation mLocation;
 
     private OnFragmentInteractionListener mListener;
 
@@ -59,16 +57,14 @@ public class MainFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param busNumer Which bus
-     * @param direction To Where
+     * @param location your position
      * @return A new instance of fragment MainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainFragment newInstance(String busNumer, String direction) {
+    public static MainFragment newInstance(MyLocation location) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
-        args.putString(BUS_NO, busNumer);
-        args.putString(DIRECTION, direction);
+        args.putSerializable(POSITION, location);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,8 +73,7 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            busNumber = getArguments().getString(BUS_NO);
-            direction = getArguments().getString(DIRECTION);
+            mLocation = (MyLocation) getArguments().getSerializable(POSITION);
         }
     }
 
@@ -146,7 +141,26 @@ public class MainFragment extends Fragment {
     }
 
     public void monitorBus() {
-        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", new SimpleDateFormat("yyyy-MM-dd HH:MM").format(Calendar.getInstance().getTime()));
+        ArrayList<Line> lines;
+        switch (mLocation) {
+            case 家:
+                break;
+            case 张江地铁:
+                break;
+            case 德国中心:
+                break;
+            case 码头:
+                break;
+            case 唐镇地铁:
+                break;
+            case 长泰:
+                break;
+            case SALIYA:
+                break;
+        }
+
+//        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", new SimpleDateFormat("yyyy-MM-dd HH:MM").format(Calendar.getInstance().getTime()));
+        final Call<RealtimeBus> buses = RestClient.getClient().dispatchBus("12213", "1939537921", "1");
         buses.enqueue(new Callback<RealtimeBus>() {
             @Override
             public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
@@ -159,7 +173,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onFailure(Call<RealtimeBus> call, Throwable t) {
-                    textView.setText(t.getMessage());
+                Log.d("aa", t.toString());
             }
         });
     }

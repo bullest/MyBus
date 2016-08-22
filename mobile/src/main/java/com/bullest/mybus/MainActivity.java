@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    private MyLocation currentLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +53,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     private void setupViewPager(ViewPager viewPager) {
         MyPageAdapter adapter = new MyPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(MainFragment.newInstance(Constants.BUS.ZJ1, Constants.DIRECTION.ZJ1_TO_HOME), "张江1路");
-        adapter.addFragment(MainFragment.newInstance("pudong2", "324"), "浦东2路");
+        if (currentLocation != null) {
+            adapter.addFragment(MainFragment.newInstance(currentLocation), currentLocation.toString());
+        }else {
+            for (MyLocation location:MyLocation.values()) {
+                adapter.addFragment(MainFragment.newInstance(location), location.toString());
+            }
+        }
         viewPager.setAdapter(adapter);
     }
 
@@ -105,9 +111,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
             if (mLastLocation != null) {
+                currentLocation = LocationHelper.getMyLocation(mLastLocation);
+                Log.d("aa", LocationHelper.getMyLocation(mLastLocation).toString());
                 Log.d("aa", "Latitude: " + mLastLocation.getLatitude() + ", Longtidude: " + mLastLocation.getLongitude() );
-                Log.d("bb", "Latitude: " + Constants.LOCATION.SHIP.getLatitude() + ", Longtidude: " + Constants.LOCATION.SHIP.getLongitude());
-                Log.d("aa", "dis to zhangmuniang:" + mLastLocation.distanceTo(Constants.LOCATION.SHIP));
             }
         }
 

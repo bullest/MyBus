@@ -16,4 +16,10 @@ public interface BusRealtimeService {
              @Query("stopid") String stopid,
              @Query("direction") String direction,
              @Query("time") String time);
+
+    @GET("palmbus_serv/PalmBusJgj/getdispatchScreen.do")
+    Call<RealtimeBus> dispatchBus
+            (@Query("lineid") String lineid,
+             @Query("stopid") String stopid,
+             @Query("direction") String direction);
 }
