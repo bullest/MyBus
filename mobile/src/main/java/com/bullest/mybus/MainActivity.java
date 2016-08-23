@@ -1,5 +1,6 @@
 package com.bullest.mybus;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
@@ -21,11 +22,7 @@ import com.google.android.gms.location.LocationServices;
 
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
+public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener{
     private MyLocation currentLocation;
 
     @Override
@@ -36,19 +33,15 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        currentLocation = (MyLocation) intent.getSerializableExtra("LOCATION");
+
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -90,42 +83,4 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     }
 
-    @Override
-    public void onStart(){
-        mGoogleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        mGoogleApiClient.disconnect();
-        super.onStop();
-    }
-
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        int permissionCheck = ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION);
-
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED){
-            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                currentLocation = LocationHelper.getMyLocation(mLastLocation);
-                Log.d("aa", LocationHelper.getMyLocation(mLastLocation).toString());
-                Log.d("aa", "Latitude: " + mLastLocation.getLatitude() + ", Longtidude: " + mLastLocation.getLongitude() );
-            }
-        }
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
 }
