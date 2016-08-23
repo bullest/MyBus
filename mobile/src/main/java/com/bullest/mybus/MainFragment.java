@@ -12,18 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Logger;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 
 /**
@@ -38,16 +32,20 @@ public class MainFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String POSITION = "position";
+    private int busNumber;
     public List<Car> cars = new ArrayList<>();
     private TextView textView;
 
-    private MyLocation mLocation;
+    private MyLocation currentLocation;
 
     private OnFragmentInteractionListener mListener;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private RecyclerView.Adapter busAdapter;
+    private RecyclerView busRecycelerView;
 
     public MainFragment() {
         // Required empty public constructor
@@ -73,7 +71,7 @@ public class MainFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mLocation = (MyLocation) getArguments().getSerializable(POSITION);
+            currentLocation = (MyLocation) getArguments().getSerializable(POSITION);
         }
     }
 
@@ -92,6 +90,11 @@ public class MainFragment extends Fragment {
         mAdapter = new MyRecyclerAdapter(cars);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        busRecycelerView = (RecyclerView) rootView.findViewById(R.id.bus_recycler_view);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        busAdapter = new BusRecyclerAdapter();
+
         return rootView;
     }
 
@@ -142,12 +145,16 @@ public class MainFragment extends Fragment {
 
     public void monitorBus() {
         ArrayList<Line> lines;
-        switch (mLocation) {
+        switch (currentLocation) {
             case 家:
                 break;
             case 张江地铁:
+                busNumber = 2;
+                showZhangjiangMetroBus();
                 break;
             case 德国中心:
+                busNumber = 1;
+                showGCBus();
                 break;
             case 码头:
                 break;
@@ -160,11 +167,30 @@ public class MainFragment extends Fragment {
         }
 
 //        final Call<RealtimeBus> buses = RestClient.getClient().realBus("12085", "1921777664", "0", new SimpleDateFormat("yyyy-MM-dd HH:MM").format(Calendar.getInstance().getTime()));
-        final Call<RealtimeBus> buses = RestClient.getClient().dispatchBus("12213", "1939537921", "1");
-        buses.enqueue(new Callback<RealtimeBus>() {
+//        final Call<RealtimeBus> buses = RestClient.getClient().dispatchBus("12213", "1939537921", "1");
+//        buses.enqueue(new Callback<RealtimeBus>() {
+//            @Override
+//            public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
+//                if (response.isSuccessful()){
+//                    cars.clear();
+//                    cars.addAll(response.body().cars.mCarList);
+//                    mAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<RealtimeBus> call, Throwable t) {
+//                Log.d("aa", t.toString());
+//            }
+//        });
+    }
+
+    private void showZhangjiangMetroBus() {
+        final Call<RealtimeBus> zhangjiang1 = RestClient.getClient().realBus("12085", "1921777664", "0");
+        zhangjiang1.enqueue(new Callback<RealtimeBus>() {
             @Override
             public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     cars.clear();
                     cars.addAll(response.body().cars.mCarList);
                     mAdapter.notifyDataSetChanged();
@@ -173,7 +199,27 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onFailure(Call<RealtimeBus> call, Throwable t) {
-                Log.d("aa", t.toString());
+
+            }
+        });
+    }
+
+    private void showGCBus() {
+        final Call<RealtimeBus> buses11 = RestClient.getClientV2().realBusV2("751512", "13", "false");
+        buses11.enqueue(new Callback<RealtimeBus>() {
+            @Override
+            public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
+                if (response.isSuccessful()) {
+                    Log.d("API", response.toString());
+                    cars.clear();
+                    cars.addAll(response.body().cars.mCarList);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RealtimeBus> call, Throwable t) {
+                Log.d("API", "API error");
             }
         });
     }

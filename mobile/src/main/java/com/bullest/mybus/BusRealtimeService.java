@@ -14,8 +14,13 @@ public interface BusRealtimeService {
     Call<RealtimeBus> realBus
             (@Query("lineid") String lineid,
              @Query("stopid") String stopid,
-             @Query("direction") String direction,
-             @Query("time") String time);
+             @Query("direction") String direction);
+
+    @GET("Project/Ver2/carMonitor.ashx")
+    Call<RealtimeBus> realBusV2
+            (@Query("lineid") String lineid,
+             @Query("stopid") String stopid,
+             @Query("direction") String direction);
 
     @GET("palmbus_serv/PalmBusJgj/getdispatchScreen.do")
     Call<RealtimeBus> dispatchBus

@@ -27,6 +27,11 @@ public class LocationHelper {
         location3.setLatitude(31.317050);
         mMap.put(MyLocation.码头, location3);
 
+        Location location4 = new Location("Tink");
+        location4.setLongitude(121.5826162);
+        location4.setLatitude(31.2135596);
+        mMap.put(MyLocation.德国中心, location4);
+
     }
 
     public static MyLocation getMyLocation(Location location) {
