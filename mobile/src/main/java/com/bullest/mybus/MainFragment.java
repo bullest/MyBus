@@ -12,6 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bullest.mybus.model.Car;
+import com.bullest.mybus.model.Line;
+import com.bullest.mybus.model.MyLocation;
+import com.bullest.mybus.model.RealtimeBus;
+import com.bullest.mybus.network.RestClient;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +40,7 @@ public class MainFragment extends Fragment {
     public static final String POSITION = "position";
     private int busNumber;
     public List<Car> cars = new ArrayList<>();
+    public List<Line> lines = new ArrayList<>();
     private TextView textView;
 
     private MyLocation currentLocation;
@@ -95,7 +102,34 @@ public class MainFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         busAdapter = new BusRecyclerAdapter();
 
+        initCardNumber();
+
         return rootView;
+    }
+
+    private void initCardNumber() {
+        switch (currentLocation) {
+            case 家:
+                lines.add(new Line("张江1路", "12085", "1921777664", "0", false, true));
+                lines.add(new Line("浦东2路", "12213", "1939537921", "1", false, true));
+                lines.add(new Line("上川专线", "505600", "20", "true", true, false));
+                lines.add(new Line("浦东11路"));
+                break;
+            case 张江地铁:
+                busNumber = 2;
+                break;
+            case 德国中心:
+                busNumber = 1;
+                break;
+            case 码头:
+                break;
+            case 唐镇地铁:
+                break;
+            case 长泰:
+                break;
+            case SALIYA:
+                break;
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

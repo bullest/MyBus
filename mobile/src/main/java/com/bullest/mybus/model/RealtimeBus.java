@@ -1,10 +1,9 @@
-package com.bullest.mybus;
+package com.bullest.mybus.model;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
-import org.simpleframework.xml.util.Entry;
 
 import java.util.List;
 

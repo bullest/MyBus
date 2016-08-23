@@ -2,6 +2,8 @@ package com.bullest.mybus;
 
 import android.location.Location;
 
+import com.bullest.mybus.model.MyLocation;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,4 +1,6 @@
-package com.bullest.mybus;
+package com.bullest.mybus.network;
+
+import com.bullest.mybus.network.BusRealtimeService;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;

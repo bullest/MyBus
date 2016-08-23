@@ -21,7 +21,7 @@ public class BusRecyclerAdapter extends RecyclerView.Adapter<BusRecyclerAdapter.
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 1;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

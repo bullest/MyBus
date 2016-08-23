@@ -1,6 +1,6 @@
-package com.bullest.mybus;
+package com.bullest.mybus.network;
 
-import java.util.List;
+import com.bullest.mybus.model.RealtimeBus;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

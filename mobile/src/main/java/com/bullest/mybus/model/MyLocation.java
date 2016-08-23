@@ -1,4 +1,4 @@
-package com.bullest.mybus;
+package com.bullest.mybus.model;
 
 /**
  * Created by gang on 8/14/16.

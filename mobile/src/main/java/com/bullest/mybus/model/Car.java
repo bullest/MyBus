@@ -1,4 +1,4 @@
-package com.bullest.mybus;
+package com.bullest.mybus.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
