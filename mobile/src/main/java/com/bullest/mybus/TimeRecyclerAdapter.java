@@ -13,15 +13,15 @@ import java.util.List;
 /**
  * Created by yunfezhang on 8/11/16.
  */
-public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.ViewHolder> {
+public class TimeRecyclerAdapter extends RecyclerView.Adapter<TimeRecyclerAdapter.ViewHolder> {
     private List<Car> mCarList;
 
-    public MyRecyclerAdapter(List<Car> mCarList){
+    public TimeRecyclerAdapter(List<Car> mCarList){
         this.mCarList = mCarList;
     }
 
     @Override
-    public MyRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TimeRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.bus_view, parent, false);
         ViewHolder vh = new ViewHolder(v);
@@ -29,7 +29,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(MyRecyclerAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(TimeRecyclerAdapter.ViewHolder holder, int position) {
         holder.mTextView.setText(mCarList.get(position).getTime());
     }
 
