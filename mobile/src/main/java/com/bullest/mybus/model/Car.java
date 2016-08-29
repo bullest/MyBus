@@ -24,8 +24,12 @@ public class Car {
     @Element(name = "vehicle", required = false)
     public String vehicle;
 
-    public int getStopdis() {
-        return  Integer.getInteger(stopdis);
+    public String getStopdis() {
+        if (stopdis != null){
+            return  stopdis;
+        } else {
+            return null;
+        }
     }
 
     public int getDistance() {

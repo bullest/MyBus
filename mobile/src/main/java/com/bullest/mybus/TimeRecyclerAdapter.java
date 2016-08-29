@@ -30,7 +30,10 @@ public class TimeRecyclerAdapter extends RecyclerView.Adapter<TimeRecyclerAdapte
 
     @Override
     public void onBindViewHolder(TimeRecyclerAdapter.ViewHolder holder, int position) {
-        holder.mTextView.setText(mCarList.get(position).getTime());
+        holder.timeTextView.setText(mCarList.get(position).getTime());
+        if (mCarList.get(position).getStopdis()!= "null") {
+            holder.disTextView.setText(mCarList.get(position).getStopdis() + "站");
+        }
     }
 
     @Override
@@ -39,10 +42,11 @@ public class TimeRecyclerAdapter extends RecyclerView.Adapter<TimeRecyclerAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public TextView timeTextView, disTextView;
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextView = (TextView)itemView.findViewById(R.id.timeTextView);
+            timeTextView = (TextView) itemView.findViewById(R.id.timeTextView);
+            disTextView = (TextView) itemView.findViewById(R.id.disTextView);
         }
     }
 }
