@@ -33,6 +33,14 @@ public class Car {
     }
 
     public String getTime() {
-        return "到达时间" + time ;
+        if (time.contains("null")) {
+            return " ";
+        } else if(time.contains(":")) {
+            return "发车时间: " + time ;
+        } else {
+            int timeValue = Integer.valueOf(time);
+            return "" + timeValue/60 + "分" + timeValue%60 + "秒后到站";
+        }
+
     }
 }

@@ -93,23 +93,31 @@ public class MainFragment extends Fragment {
     }
 
     private void initCardNumber() {
+        lines.clear();
         switch (currentLocation) {
             case 家:
-                lines.add(new Line("张江1路", "12085", "1921777664", "0", false, true));
-                lines.add(new Line("浦东2路", "12213", "1939537921", "1", false, true));
-                lines.add(new Line("上川专线", "505600", "20", "true", true, false));
+                lines.add(new Line("张江1路", "1939537921", "12085", "0", false, true));
+                lines.add(new Line("浦东2路", "1921777664", "12213", "1", false, true));
+                lines.add(new Line("上川专线", "20", "505600", "true", true, false));
+                lines.add(new Line("浦东11路", "15", "751512", "true", true, false));
                 break;
             case 张江地铁:
+                lines.add(new Line("张江1路", "192177766", "12085", "0", false, true));
                 break;
             case 德国中心:
+                lines.add(new Line("浦东11路", "13", "751512", "false", true, false));
                 break;
             case 码头:
+                lines.add(new Line("81路", "2357788672", "10065", "1", false, false));
                 break;
             case 唐镇地铁:
+                lines.add(new Line("浦东2路", "1973026819", "12213", "0", false, false));
                 break;
             case 长泰:
+                lines.add(new Line("张江1路", "1938751490", "12085", "1", false, true));
                 break;
-            case SALIYA:
+            case 萨莉亚:
+                lines.add(new Line("浦东2路", "2073952270", "12213", "0", false, true));
                 break;
         }
     }

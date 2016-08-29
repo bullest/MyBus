@@ -11,5 +11,5 @@ public enum MyLocation {
     码头,
     唐镇地铁,
     长泰,
-    SALIYA
+    萨莉亚
 }

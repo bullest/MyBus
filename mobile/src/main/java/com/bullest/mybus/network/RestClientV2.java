@@ -1,21 +1,19 @@
 package com.bullest.mybus.network;
 
-import com.bullest.mybus.network.BusRealtimeService;
-
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 /**
- * Created by yunfezhang on 8/11/16.
+ * Created by yunfezhang on 8/29/16.
  */
-public class RestClient {
+public class RestClientV2 {
     private static BusRealtimeService sBusApiInterface;
-    private static String baseUrl = "http://180.166.5.82:8000";
+    private static String v2BaseUrl = "http://bst.shdzyb.com:36001";
 
-    public static BusRealtimeService getClient() {
+    public static BusRealtimeService getClientV2() {
         if (sBusApiInterface == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
+                    .baseUrl(v2BaseUrl)
                     .addConverterFactory(SimpleXmlConverterFactory.create())
                     .build();
             sBusApiInterface = retrofit.create(BusRealtimeService.class);

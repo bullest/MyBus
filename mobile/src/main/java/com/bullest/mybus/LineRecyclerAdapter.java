@@ -12,6 +12,7 @@ import com.bullest.mybus.model.Car;
 import com.bullest.mybus.model.Line;
 import com.bullest.mybus.model.RealtimeBus;
 import com.bullest.mybus.network.RestClient;
+import com.bullest.mybus.network.RestClientV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,6 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
 
         final Call<RealtimeBus> bus = getBusFromLine(line);
 
-
         final List<Car> cars = new ArrayList<>();
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(holder.timeRecyclerView.getContext());
         final TimeRecyclerAdapter timeAdapter = new TimeRecyclerAdapter(cars);
@@ -59,7 +59,6 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
             @Override
             public void onResponse(Call<RealtimeBus> call, Response<RealtimeBus> response) {
                 if (response.isSuccessful()) {
-                    Log.d("API", response.toString());
                     cars.clear();
                     cars.addAll(response.body().cars.mCarList);
                     timeAdapter.notifyDataSetChanged();
@@ -80,13 +79,13 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
 
         if (line.dispatch) {
             if (line.v2) {
-                bus = RestClient.getClientV2().dispatchBus(line.lineId, line.terminalId, line.direction);
+                bus = RestClientV2.getClientV2().dispatchBus(line.lineId, line.terminalId, line.direction);
             } else {
                 bus = RestClient.getClient().dispatchBus(line.lineId, line.terminalId, line.direction);
             }
         } else {
             if (line.v2) {
-                bus = RestClient.getClientV2().realBusV2(line.lineId, line.terminalId, line.direction);
+                bus = RestClientV2.getClientV2().realBusV2(line.lineId, line.terminalId, line.direction);
             } else {
                 bus = RestClient.getClient().realBus(line.lineId, line.terminalId, line.direction);
             }

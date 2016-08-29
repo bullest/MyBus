@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         MyPageAdapter adapter = new MyPageAdapter(getSupportFragmentManager());
         if (currentLocation != null) {
             adapter.addFragment(MainFragment.newInstance(currentLocation), currentLocation.toString());
-        }else {
-            for (MyLocation location:MyLocation.values()) {
-                adapter.addFragment(MainFragment.newInstance(location), location.toString());
-            }
+        }
+
+        for (MyLocation location:MyLocation.values()) {
+            adapter.addFragment(MainFragment.newInstance(location), location.toString());
         }
         viewPager.setAdapter(adapter);
     }
