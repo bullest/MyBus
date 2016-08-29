@@ -41,11 +41,11 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
     }
 
     @Override
-    public void onBindViewHolder(LineRecyclerAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(LineRecyclerAdapter.ViewHolder holder, int position) {
         Line line = mLines.get(position);
-        final Call<RealtimeBus> bus;
-
         holder.lineName.setText(line.lineName);
+
+        final Call<RealtimeBus> bus = getBusFromLine(line);
 
 
         final List<Car> cars = new ArrayList<>();
@@ -54,20 +54,6 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
 
         holder.timeRecyclerView.setLayoutManager(mLayoutManager);
         holder.timeRecyclerView.setAdapter(timeAdapter);
-
-        if (line.dispatch) {
-            if (line.v2) {
-                bus = RestClient.getClientV2().dispatchBus(line.lineId, line.terminalId, line.direction);
-            } else {
-                bus = RestClient.getClient().dispatchBus(line.lineId, line.terminalId, line.direction);
-            }
-        } else {
-            if (line.v2) {
-                bus = RestClient.getClientV2().realBusV2(line.lineId, line.terminalId, line.direction);
-            } else {
-                bus = RestClient.getClient().realBus(line.lineId, line.terminalId, line.direction);
-            }
-        }
 
         bus.enqueue(new Callback<RealtimeBus>() {
             @Override
@@ -86,6 +72,26 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
             }
         });
 
+    }
+
+    private Call<RealtimeBus> getBusFromLine(Line line) {
+
+        Call<RealtimeBus> bus;
+
+        if (line.dispatch) {
+            if (line.v2) {
+                bus = RestClient.getClientV2().dispatchBus(line.lineId, line.terminalId, line.direction);
+            } else {
+                bus = RestClient.getClient().dispatchBus(line.lineId, line.terminalId, line.direction);
+            }
+        } else {
+            if (line.v2) {
+                bus = RestClient.getClientV2().realBusV2(line.lineId, line.terminalId, line.direction);
+            } else {
+                bus = RestClient.getClient().realBus(line.lineId, line.terminalId, line.direction);
+            }
+        }
+        return bus;
     }
 
     @Override
