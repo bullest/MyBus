@@ -102,7 +102,7 @@ public class MainFragment extends Fragment {
                 lines.add(new Line("浦东11路 (04:45~21:10)", "15", "751512", "true", true, false));
                 break;
             case 张江地铁:
-                lines.add(new Line("张江1路 (06:30~22:05)", "192177766", "12085", "0", false, true));
+                lines.add(new Line("张江1路 (06:30~22:05)", "1921777664", "12085", "0", false, false));
                 break;
             case 德国中心:
                 lines.add(new Line("浦东11路 (06:00~22:35)", "13", "751512", "false", true, false));
