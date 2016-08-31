@@ -42,7 +42,7 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
     }
 
     @Override
-        public void onBindViewHolder(LineRecyclerAdapter.ViewHolder holder, int position) {
+        public void onBindViewHolder(final LineRecyclerAdapter.ViewHolder holder, int position) {
         Line line = mLines.get(position);
         holder.lineName.setText(line.lineName);
 
@@ -102,11 +102,13 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView lineName;
         public RecyclerView timeRecyclerView;
+        public TextView updateTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
             lineName = (TextView) itemView.findViewById(R.id.line_name);
             timeRecyclerView = (RecyclerView) itemView.findViewById(R.id.time_recyclerview);
+            updateTime = (TextView) itemView.findViewById(R.id.timeTextView);
         }
     }
 }
