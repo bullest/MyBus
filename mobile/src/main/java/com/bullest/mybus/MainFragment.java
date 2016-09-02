@@ -117,10 +117,13 @@ public class MainFragment extends Fragment {
                 lines.add(new Line("张江1路 (06:30~22:05)", "1938751490", "12085", "1", false, true));
                 break;
             case 萨莉亚:
-                lines.add(new Line("浦东2路 (07:05:21:30)", "2073952270", "12213", "0", false, true));
+                lines.add(new Line("浦东2路 (07:05~21:30)", "2073952270", "12213", "0", false, true));
                 break;
+            case 浦东大道:
+                lines.add(new Line("上川专线 (05:20~23:59)", "13", "505600", "false", true, false));
+                lines.add(new Line("81路 (04:44~23:00)", "2173239297", "10065", "0", false, false));
         }
-    }
+   }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
