@@ -41,6 +41,8 @@ public class Car {
             return " ";
         } else if(time.contains(":")) {
             return "发车时间: " + time ;
+        } else if (time.contains("分组")) {
+            return time;
         } else {
             int timeValue = Integer.valueOf(time);
             return "" + timeValue/60 + "分" + timeValue%60 + "秒后到站";

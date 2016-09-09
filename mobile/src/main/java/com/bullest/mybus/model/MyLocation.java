@@ -7,9 +7,9 @@ package com.bullest.mybus.model;
 public enum MyLocation {
     家,
     张江地铁,
-    德国中心,
-    唐镇地铁,
     长泰,
+    唐镇地铁,
+    德国中心,
     萨莉亚,
     码头,
     浦东大道

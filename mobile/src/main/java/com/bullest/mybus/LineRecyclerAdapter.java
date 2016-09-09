@@ -14,14 +14,15 @@ import com.bullest.mybus.model.RealtimeBus;
 import com.bullest.mybus.network.RestClient;
 import com.bullest.mybus.network.RestClientV2;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static java.security.AccessController.getContext;
 
 /**
  * Created by yunfezhang on 8/23/16.
@@ -73,6 +74,13 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
 
     }
 
+    private String currentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        String timeString = sdf.format(cal.getTime());
+        return timeString;
+    }
+
     private Call<RealtimeBus> getBusFromLine(Line line) {
 
         Call<RealtimeBus> bus;
@@ -108,7 +116,6 @@ public class LineRecyclerAdapter extends RecyclerView.Adapter<LineRecyclerAdapte
             super(itemView);
             lineName = (TextView) itemView.findViewById(R.id.line_name);
             timeRecyclerView = (RecyclerView) itemView.findViewById(R.id.time_recyclerview);
-            updateTime = (TextView) itemView.findViewById(R.id.timeTextView);
         }
     }
 }
