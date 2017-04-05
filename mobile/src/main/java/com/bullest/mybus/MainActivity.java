@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Intent intent = getIntent();
-        currentLocation = (MyLocation) intent.getSerializableExtra("LOCATION");
+//        Intent intent = getIntent();
+//        currentLocation = (MyLocation) intent.getSerializableExtra("LOCATION");
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         setupViewPager(viewPager);

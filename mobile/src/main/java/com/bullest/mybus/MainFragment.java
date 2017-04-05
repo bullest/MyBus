@@ -96,33 +96,14 @@ public class MainFragment extends Fragment {
         lines.clear();
         switch (currentLocation) {
             case 家:
-                lines.add(new Line("张江1路 (06:30~21:30)", "1939537921", "12085", "0", false, true));
-                lines.add(new Line("浦东2路 (06:20~21:00)", "1921777664", "12213", "1", false, true));
-                lines.add(new Line("上川专线 (05:00:22:30)", "20", "505600", "true", true, false));
-                lines.add(new Line("浦东11路 (04:45~21:10)", "15", "751512", "true", true, false));
+                lines.add(new Line("龙东专线 (04:15~16:55)", "1553399810", "10638", "1", false, false));
                 break;
-            case 张江地铁:
-                lines.add(new Line("张江1路 (06:30~22:05)", "1921777664", "12085", "0", false, false));
+            case 下班:
+                lines.add(new Line("浦东25路 (07:35～19:10)", "1921777664", "90011", "1", false, true));
+                lines.add(new Line("龙东专线 (06:00~19:00)", "1569914891", "10638", "0", false, false));
                 break;
-            case 德国中心:
-                lines.add(new Line("浦东11路 (06:00~22:35)", "13", "751512", "false", true, false));
-                break;
-            case 码头:
-                lines.add(new Line("81路 (04:40~23:50)", "2357788672", "10065", "1", false, false));
-                break;
-            case 唐镇地铁:
-                lines.add(new Line("浦东2路 (07:05:21:30)", "1973026819", "12213", "0", false, false));
-                break;
-            case 长泰:
-                lines.add(new Line("张江1路 (06:30~22:05)", "1938751490", "12085", "1", false, true));
-                lines.add(new Line("浦东11路 (06:00~22:35)", "17", "751512", "false", true, false));
-                break;
-            case 萨莉亚:
-                lines.add(new Line("浦东2路 (07:05~21:30)", "2073952270", "12213", "0", false, true));
-                break;
-            case 浦东大道:
-                lines.add(new Line("上川专线 (05:20~23:59)", "13", "505600", "false", true, false));
-                lines.add(new Line("81路 (04:44~23:00)", "2173239297", "10065", "0", false, false));
+            case 上班:
+                lines.add(new Line("989路 (04:40~21:00)", "2023227395", "10760", "0", false, false));
         }
    }
 

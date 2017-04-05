@@ -41,7 +41,7 @@ public class Car {
             return " ";
         } else if(time.contains(":")) {
             return "发车时间: " + time ;
-        } else if (time.contains("分组")) {
+        } else if (time.contains("分钟")) {
             return time;
         } else {
             int timeValue = Integer.valueOf(time);
